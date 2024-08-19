@@ -1,0 +1,67 @@
+def exibir_tabuleiro(tabuleiro):
+    for linha in tabuleiro:
+        print(" | ".join(linha))
+        print("-" * 5)
+
+def verificar_vencedor(tabuleiro, jogador):
+    condicoes_vitoria = [
+        # Linhas
+        [tabuleiro[0][0], tabuleiro[0][1], tabuleiro[0][2]],
+        [tabuleiro[1][0], tabuleiro[1][1], tabuleiro[1][2]],
+        [tabuleiro[2][0], tabuleiro[2][1], tabuleiro[2][2]],
+        # Colunas
+        [tabuleiro[0][0], tabuleiro[1][0], tabuleiro[2][0]],
+        [tabuleiro[0][1], tabuleiro[1][1], tabuleiro[2][1]],
+        [tabuleiro[0][2], tabuleiro[1][2], tabuleiro[2][2]],
+        # Diagonais
+        [tabuleiro[0][0], tabuleiro[1][1], tabuleiro[2][2]],
+        [tabuleiro[2][0], tabuleiro[1][1], tabuleiro[0][2]]
+    ]
+    return [jogador, jogador, jogador] in condicoes_vitoria
+
+def tabuleiro_cheio(tabuleiro):
+    for linha in tabuleiro:
+        if " " in linha:
+            return False
+    return True
+
+def principal():
+    tabuleiro = [[" " for _ in range(3)] for _ in range(3)]
+    jogadores = ["X", "O"]
+    jogador_atual = 0
+    
+    while True:
+        exibir_tabuleiro(tabuleiro)
+        print(f"Vez do jogador {jogadores[jogador_atual]}")
+
+        # Obter movimento do jogador
+        try:
+            linha = int(input("Digite a linha (0, 1, 2): "))
+            coluna = int(input("Digite a coluna (0, 1, 2): "))
+            if linha not in range(3) or coluna not in range(3):
+                print("Movimento inválido, linha ou coluna fora do intervalo. Tente novamente.")
+                continue
+        except ValueError:
+            print("Entrada inválida, por favor, digite apenas números. Tente novamente.")
+            continue
+        
+        if tabuleiro[linha][coluna] != " ":
+            print("Movimento inválido, célula já ocupada. Tente novamente.")
+            continue
+        
+        tabuleiro[linha][coluna] = jogadores[jogador_atual]
+        
+        if verificar_vencedor(tabuleiro, jogadores[jogador_atual]):
+            exibir_tabuleiro(tabuleiro)
+            print(f"Jogador {jogadores[jogador_atual]} venceu!")
+            break
+        
+        if tabuleiro_cheio(tabuleiro):
+            exibir_tabuleiro(tabuleiro)
+            print("Empate!")
+            break
+        
+        jogador_atual = 1 - jogador_atual  # Alternar jogadores
+
+if __name__ == "__main__":
+    principal()
