@@ -1,0 +1,28 @@
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+
+# Arquivos e diretórios de configuração do ambiente
+.env
+*.env
+
+# Diretórios de build
+build/
+dist/
+*.egg-info/
+
+# Arquivos de configuração de IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Arquivos de banco de dados
+*.sqlite3
+
+# Outros arquivos ignorados
+*.bak
+*.tmp
